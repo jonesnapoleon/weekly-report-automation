@@ -1,5 +1,3 @@
-
-
 class HTMLSection:
 
     def __init__(self, data, title='', type=None):
@@ -29,10 +27,7 @@ class HTMLSection:
             return f'{jira_ticket} <b>{jira_status}</b>: {jira_title} '
 
     def process(self):
-        rows = []
-
-        for ticket in self.data:
-            rows.append(
-                f'<li>{self.__generate_ticket_description(ticket)}</li>')
+        rows = [
+            f'<li>{self.__generate_ticket_description(ticket)}</li>' for ticket in self.data]
 
         return self.title + '<br/>' + '<ul>' + ''.join(rows) + '</ul>'
