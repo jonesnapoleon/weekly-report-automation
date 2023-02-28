@@ -1,9 +1,14 @@
 
+
+import mimetypes
 import smtplib
 import ssl
 from email.message import EmailMessage
+from email.utils import make_msgid
+from pathlib import Path
+from string import Template
 
-from constants import GMAIL_EMAIL, GMAIL_PASSWORD
+from constants import DEFAULT_IMAGE_PATH, GMAIL_EMAIL, GMAIL_PASSWORD
 
 
 class GmailClient:
@@ -20,19 +25,35 @@ class GmailClient:
 
         self.email_sender = email
 
-    def send_message(self, subject, body, email_to):
+    def send_message(self, subject, body, email_to, image_path=DEFAULT_IMAGE_PATH):
 
         try:
-            message = EmailMessage()
+            msg = EmailMessage()
 
-            message['Subject'] = subject
-            message['From'] = self.email_sender
-            message['To'] = email_to
-            message.add_header('Content-Type', 'text/html')
-            message.set_content(body, subtype='html')
+            msg['Subject'] = subject
+            msg['From'] = self.email_sender
+            msg['To'] = ", ".join(email_to)
 
-            self.email_server.send_message(
-                message, message['From'], message['To'])
+            template = Template(body)
+            template.safe_substitute(IMAGE=f'[image: {subject}]')
+
+            msg.set_content(template.safe_substitute(
+                IMAGE=f'[image: {subject}]'))
+
+            cid = make_msgid()[1:-1]
+
+            msg.add_alternative(template.safe_substitute(
+                IMAGE=f'<img src="cid:{cid}" />'), subtype='html')
+
+            maintype, subtype = mimetypes.guess_type(str(image_path.split('/')[-1]))[
+                0].split('/', 1)
+
+            msg.get_payload()[1].add_related(
+                Path(image_path).read_bytes(), maintype, subtype, cid=f"<{cid}>")
+
+            Path(image_path).write_bytes(bytes(msg))
+
+            self.email_server.send_message(msg, msg['From'], msg['To'])
 
         except Exception as e:
             print(e)

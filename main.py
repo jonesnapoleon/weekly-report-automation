@@ -21,18 +21,12 @@ if __name__ == "__main__":
                                           title=HAVE_DONE_MESSAGE, type='HAVE_DONE').process()
     to_do_email_content = HTMLSection(data=to_do_data,
                                       title=TO_DO_MESSAGE, type='TO_DO').process()
-    piechart_content = PieChart(
+    PieChart(
         jira_status=piechart_status, title=PIECHART_MESSAGE).process()
 
     email_subject = get_email_subject()
     email_content = get_email_content(
-        have_done_email_content + to_do_email_content + piechart_content)
-    print(email_content)
-
-    file = open('FHU.html', 'w')
-    file.write(have_done_email_content +
-               to_do_email_content + piechart_content)
-    file.close()
+        have_done_email_content + to_do_email_content)
 
     gmail_client.send_message(email_subject, email_content, EMAIL_RECIPIENTS)
     gmail_client.quit()

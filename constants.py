@@ -18,3 +18,5 @@ GMAIL_EMAIL = config('GMAIL_EMAIL')
 GMAIL_PASSWORD = config('GMAIL_PASSWORD')
 
 EMAIL_RECIPIENTS = ['jones.autumn@seamoney.com']
+
+DEFAULT_IMAGE_PATH = 'output/file.jpg'

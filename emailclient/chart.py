@@ -4,6 +4,8 @@ import io
 import numpy as np
 from matplotlib import pyplot as plt
 
+from constants import DEFAULT_IMAGE_PATH
+
 
 class PieChart:
     def __init__(self, jira_status={}, title=''):
@@ -24,16 +26,12 @@ class PieChart:
                   title="Jira task status",
                   loc="center left",
                   bbox_to_anchor=(1, 0, 0.5, 1))
-
-        plt.setp(autotexts, size=8, weight="bold")
-
         ax.set_title(self.title)
 
-        string_io_bytes = io.BytesIO()
-        plt.savefig(string_io_bytes, format='jpg')
-
-        string_io_bytes.seek(0)
-        return base64.b64encode(string_io_bytes.read()).decode()
+        plt.setp(autotexts, size=8, weight="bold")
+        plt.savefig(DEFAULT_IMAGE_PATH)
 
     def process(self):
-        return f'<p><img src="data:image/jpeg;base64,{self.__generate_image()}"/></p>'
+        self.__generate_image()
+
+        return f'<p><img src="data:image/jpeg;base64"/></p>'

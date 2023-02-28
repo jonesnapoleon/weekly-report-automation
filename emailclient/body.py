@@ -14,7 +14,7 @@ def get_email_subject():
 
 def get_email_content(main_content):
     EMAIL_CONTENT_TEMPLATE = Template(
-        'Hello Julian, <br/> $CONTENT <br/> Regards, <br/> Jones Napoleon')
+        'Hello Julian, <br/> $CONTENT <br/> $IMAGE <br/> Regards, <br/> Jones Napoleon')
 
     result = EMAIL_CONTENT_TEMPLATE.safe_substitute(CONTENT=main_content)
     return result
