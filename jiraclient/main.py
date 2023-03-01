@@ -41,7 +41,7 @@ class JiraClient:
             except:
                 continue
 
-        return task_map.values()
+        return list(filter(lambda data: data.task_status not in ['Done', 'Closed'], task_map.values()))
 
     def obtain_jira_piechart_status(self):
         piechart_status = self.jira.jql(
