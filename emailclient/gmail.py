@@ -1,5 +1,4 @@
 
-
 import mimetypes
 import smtplib
 import ssl
@@ -8,7 +7,9 @@ from email.utils import make_msgid
 from pathlib import Path
 from string import Template
 
-from constants import DEFAULT_IMAGE_PATH, GMAIL_EMAIL, GMAIL_PASSWORD
+from constants import (DEFAULT_JIRA_STATUS_IMAGE_PATH, EMAIL_RECIPIENTS,
+                       GMAIL_EMAIL, GMAIL_PASSWORD)
+from emailclient.content.email_content import EmailContent
 
 
 class GmailClient:
@@ -25,38 +26,73 @@ class GmailClient:
 
         self.email_sender = email
 
-    def send_message(self, subject, body, email_to, image_path=DEFAULT_IMAGE_PATH):
+    def setup_email(self, subject, email_to=EMAIL_RECIPIENTS):
+        print('Setting up email')
 
         try:
-            msg = EmailMessage()
+            self.message = EmailMessage()
 
-            msg['Subject'] = subject
-            msg['From'] = self.email_sender
-            msg['To'] = ", ".join(email_to)
+            self.message['Subject'] = subject
+            self.message['From'] = self.email_sender
+            self.message['To'] = email_to
+        except Exception as e:
+            print(e)
 
-            template = Template(body)
-            template.safe_substitute(IMAGE=f'[image: {subject}]')
+        return self
 
-            msg.set_content(template.safe_substitute(
-                IMAGE=f'[image: {subject}]'))
+    def __add_text_message(self, text_content):
+        template = Template(text_content)
 
-            cid = make_msgid()[1:-1]
+        self.message.set_content(template.safe_substitute(
+            IMAGE=f'[image: {self.message["Subject"]}]'))
 
-            msg.add_alternative(template.safe_substitute(
-                IMAGE=f'<img src="cid:{cid}" />'), subtype='html')
+        return self
 
-            maintype, subtype = mimetypes.guess_type(str(image_path.split('/')[-1]))[
-                0].split('/', 1)
+    def __add_html_message(self, html_content):
+        template = Template(html_content)
 
-            msg.get_payload()[1].add_related(
-                Path(image_path).read_bytes(), maintype, subtype, cid=f"<{cid}>")
+        self.cid = make_msgid()[1:-1]
 
-            Path(image_path).write_bytes(bytes(msg))
+        self.message.add_alternative(template.safe_substitute(
+            IMAGE=f'<img src="cid:{self.cid}" />'), subtype='html')
 
-            self.email_server.send_message(msg, msg['From'], msg['To'])
+        return self
+
+    def __add_image_content(self, image_path):
+        maintype, subtype = mimetypes.guess_type(str(image_path.split('/')[-1]))[
+            0].split('/', 1)
+
+        self.message.get_payload()[1].add_related(
+            Path(image_path).read_bytes(), maintype, subtype, cid=f"<{self.cid}>")
+
+        Path(image_path).write_bytes(bytes(self.message))
+
+        return self
+
+    def add_body(self, email_content: EmailContent, image_path=DEFAULT_JIRA_STATUS_IMAGE_PATH):
+        print('Constructing email body')
+        try:
+            self.__add_text_message(email_content.text_content)
+            self.__add_html_message(email_content.html_content)
+
+            self.__add_image_content(image_path)
 
         except Exception as e:
             print(e)
+
+        return self
+
+    def send_message(self):
+        print('Sending email...')
+        try:
+            self.email_server.send_message(
+                self.message, self.message['From'], self.message['To'])
+            print('Email sent successfully')
+
+        except Exception as e:
+            print('Fail to send email', e)
+
+        return self
 
     def quit(self):
         self.email_server.quit()

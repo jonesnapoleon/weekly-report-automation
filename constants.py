@@ -1,3 +1,5 @@
+from string import Template
+
 from decouple import config
 
 GITLAB_USERNAME = config('GITLAB_USERNAME')
@@ -8,15 +10,24 @@ JIRA_BASE_PATH = config('JIRA_BASE_PATH')
 JIRA_USERNAME = config('JIRA_USERNAME')
 JIRA_PERSONAL_ACCESS_TOKEN = config('JIRA_PERSONAL_ACCESS_TOKEN')
 
-THRESHOLD_DATE_DELTA = 48
-
-HAVE_DONE_MESSAGE = "Last week, I've done:"
-TO_DO_MESSAGE = 'This week, I will do:'
-PIECHART_MESSAGE = 'Current issue statuses'
-
 GMAIL_EMAIL = config('GMAIL_EMAIL')
 GMAIL_PASSWORD = config('GMAIL_PASSWORD')
 
-EMAIL_RECIPIENTS = ['jones.autumn@seamoney.com']
 
-DEFAULT_IMAGE_PATH = 'output/file.jpg'
+DEFAULT_JIRA_STATUS_IMAGE_PATH = 'output/jira_status.jpg'
+
+HAVE_DONE_MESSAGE = "Last week, I've done:"
+TO_DO_MESSAGE = 'This week, I will do:'
+DEFAULT_PIECHART_MESSAGE = 'Current issue statuses'
+
+
+THRESHOLD_DATE_DELTA = 48
+EMAIL_RECIPIENTS = ['jones.autumn@seamoney.com',
+                    'jonesnapoleonautumn1@gmail.com']
+
+
+EMAIL_CONTENT_HTML_TEMPLATE = Template(
+    'Hello Julian,<br/>$CONTENT<br/>$IMAGE<br/>Regards,<br/>Jones Napoleon')
+
+EMAIL_CONTENT_TEXT_TEMPLATE = Template(
+    'Hello Julian,\n$CONTENT\n$IMAGE\nRegards,\nJones Napoleon')

@@ -1,7 +1,12 @@
+from typing import List
+
 from atlassian import Jira
 
 from constants import (JIRA_BASE_PATH, JIRA_PERSONAL_ACCESS_TOKEN,
                        JIRA_USERNAME, THRESHOLD_DATE_DELTA)
+from issue.issue_interface import IssueInterface
+
+from .jira_issue import JiraIssue
 
 
 class JiraClient:
@@ -9,49 +14,43 @@ class JiraClient:
         self.jira = Jira(url=JIRA_BASE_PATH, username=JIRA_USERNAME,
                          token=JIRA_PERSONAL_ACCESS_TOKEN)
 
-        self.todo_data = self.jira.jql(self.__get_jql_request_for_todo())
+    def __get_jql_request(self, anti_statuses=[], created_date=None):
+        time_filter = f'AND createdDate > -{created_date}d' if created_date is not None else ''
+        status_filter = f'AND status not in ({", ".join(anti_statuses)})' if anti_statuses else ''
 
-        self.piechart_status = self.jira.jql(
-            self.__get_jql_request_for_piechart_status())
+        return f'project = SIPP AND (Developer = currentUser() OR assignee = currentUser()) {status_filter} {time_filter} ORDER BY createdDate DESC'
 
-    def __extract_metadata(self, data):
-        issue_key = data['key']
+    def obtain_jira_tasks(self) -> List[IssueInterface]:
+        todo_data = self.jira.jql(self.__get_jql_request(
+            anti_statuses=[], created_date=THRESHOLD_DATE_DELTA))
 
-        task_summary = data['fields']['summary']
-        task_status = data['fields']['status']['name']
+        task_map = {}
 
-        issue_type_name = data['fields']['issuetype']['name']
-
-        return {'issue_key': issue_key, 'task_summary': task_summary, 'task_status': task_status, 'issue_type_name': issue_type_name}
-
-    def __get_jql_request_for_todo(self):
-        return f'project = SIPP AND (Developer = currentUser() OR assignee = currentUser()) AND createdDate > -{THRESHOLD_DATE_DELTA}d ORDER BY createdDate DESC'
-
-    def __get_jql_request_for_piechart_status(self):
-        return f'project = SIPP AND (Developer = currentUser() OR assignee = currentUser()) AND status not in (Done, Closed) ORDER BY createdDate DESC'
-
-    def obtain_jira_tasks(self, anti_statuses=[]):
-        result = []
-
-        for issue in self.todo_data['issues']:
+        for issue in todo_data['issues']:
             subtasks = issue['fields']['subtasks']
 
             for subtask in subtasks:
-                result.append(self.__extract_metadata(subtask))
+                subtask_issue = JiraIssue(subtask)
+                task_map[subtask_issue.id] = subtask_issue
 
             try:
                 parenttask = issue['fields']['parent']
-                result.append(self.__extract_metadata(parenttask))
+                parenttask_issue = JiraIssue(parenttask)
+                task_map[parenttask_issue.id] = parenttask_issue
+
             except:
                 continue
 
-        return list(filter(lambda data: data['task_status'] not in anti_statuses, result))
+        return task_map.values()
 
     def obtain_jira_piechart_status(self):
+        piechart_status = self.jira.jql(
+            self.__get_jql_request(anti_statuses=['Done', 'Closed'], created_date=None))
+
         task_statuses = {}
 
-        for issue in self.piechart_status['issues']:
-            task_status = self.__extract_metadata(issue)['task_status']
+        for issue in piechart_status['issues']:
+            task_status = JiraIssue(issue).task_status
             task_statuses[task_status] = task_statuses.get(task_status, 0) + 1
 
         return task_statuses
