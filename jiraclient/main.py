@@ -2,7 +2,7 @@ from typing import List
 
 from atlassian import Jira
 
-from constants import (JIRA_BASE_PATH, JIRA_PERSONAL_ACCESS_TOKEN,
+from constants import (JIRA_BASE_URL, JIRA_PERSONAL_ACCESS_TOKEN,
                        JIRA_USERNAME, THRESHOLD_DATE_DELTA)
 from issue.issue_interface import IssueInterface
 
@@ -11,7 +11,7 @@ from .jira_issue import JiraIssue
 
 class JiraClient:
     def __init__(self):
-        self.jira = Jira(url=JIRA_BASE_PATH, username=JIRA_USERNAME,
+        self.jira = Jira(url=JIRA_BASE_URL, username=JIRA_USERNAME,
                          token=JIRA_PERSONAL_ACCESS_TOKEN)
 
     def __get_jql_request(self, anti_statuses=[], created_date=None):
