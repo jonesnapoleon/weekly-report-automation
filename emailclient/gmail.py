@@ -8,13 +8,13 @@ from pathlib import Path
 from string import Template
 
 from constants import (DEFAULT_JIRA_STATUS_IMAGE_PATH, EMAIL_RECIPIENTS,
-                       GMAIL_EMAIL, GMAIL_PASSWORD)
+                       GMAIL_EMAIL, GMAIL_NAME, GMAIL_PASSWORD)
 from emailclient.content.email_content import EmailContent
 
 
 class GmailClient:
 
-    def __init__(self, email=GMAIL_EMAIL, password=GMAIL_PASSWORD) -> None:
+    def __init__(self, name=GMAIL_NAME, email=GMAIL_EMAIL, password=GMAIL_PASSWORD) -> None:
         SMTP_PORT = 587
         SMTP_SERVER = "smtp.gmail.com"
 
@@ -24,7 +24,8 @@ class GmailClient:
         self.email_server.starttls(context=simple_email_context)
         self.email_server.login(email, password)
 
-        self.email_sender = email
+        self.sender_email = email
+        self.sender_name = name
 
     def setup_email(self, subject, email_to=EMAIL_RECIPIENTS):
         print('Setting up email')
@@ -33,8 +34,8 @@ class GmailClient:
             self.message = EmailMessage()
 
             self.message['Subject'] = subject
-            self.message['From'] = self.email_sender
-            self.message['To'] = email_to
+            self.message['From'] = f'{self.sender_name} <{self.sender_email}>'
+            self.message['To'] = ', '.join(email_to)
         except Exception as e:
             print(e)
 
@@ -86,7 +87,7 @@ class GmailClient:
         print('Sending email...')
         try:
             self.email_server.send_message(
-                self.message, self.message['From'], self.message['To'])
+                self.message, self.message['From'], self.message['To'].split(', '))
             print('Email sent successfully')
 
         except Exception as e:

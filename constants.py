@@ -12,7 +12,7 @@ JIRA_PERSONAL_ACCESS_TOKEN = config('JIRA_PERSONAL_ACCESS_TOKEN')
 
 GMAIL_EMAIL = config('GMAIL_EMAIL')
 GMAIL_PASSWORD = config('GMAIL_PASSWORD')
-
+GMAIL_NAME = config('GMAIL_NAME')
 
 DEFAULT_JIRA_STATUS_IMAGE_PATH = 'output/jira_status.jpg'
 
@@ -22,8 +22,8 @@ DEFAULT_PIECHART_MESSAGE = 'Current issue statuses'
 
 
 THRESHOLD_DATE_DELTA = 48
-EMAIL_RECIPIENTS = ['jones.autumn@seamoney.com',
-                    'jonesnapoleonautumn1@gmail.com']
+EMAIL_RECIPIENTS = [
+    'jonesnapoleonautumn1@gmail.com', 'indonesiaodyssey.id@gmail.com']
 
 
 EMAIL_CONTENT_HTML_TEMPLATE = Template(
