@@ -56,4 +56,4 @@ Without docker: `python3 main.py`
 
 ## License
 
-This project is licensed under the MIT License. See LICENSE for more information.
+This project is licensed under the MIT License. See [LICENSE](https://github.com/jonesnapoleon/weekly-report-automation/blob/main/LICENSE) for more information.
