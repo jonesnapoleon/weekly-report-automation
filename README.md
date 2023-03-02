@@ -1,15 +1,14 @@
 # Weekly report email automation
 
-[![License](https://img.shields.io/github/license/get-icon/geticon)](https://github.com/get-icon/geticon/blob/master/LICENSE 'License')
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 This program automates the process of sending a weekly report email to a specified recipient (usually your direct reporting line).
 
 The report contains data from GitLab and Jira about completed merge requests and open tasks, respectively. A pie chart is also generated to display the current status of Jira tasks.
 
-<img src="https://github.com/get-icon/geticon/raw/master/icons/gitlab.svg" alt="React" width="21px" height="21px">
-<img src="https://github.com/get-icon/geticon/raw/master/icons/jira.svg" alt="React" width="21px" height="21px">
-<img src="https://github.com/get-icon/geticon/raw/master/icons/google-gmail.svg" alt="React" width="21px" height="21px">
-<img src="https://github.com/get-icon/geticon/raw/master/icons/python.svg" alt="React" width="21px" height="21px">
+You could read more about the projects at [my medium](https://jonesnapoleon.medium.com/weekly-report-email-now-fully-automated-6b3d4cb392fe).
+
+<img src="https://github.com/get-icon/geticon/raw/master/icons/gitlab.svg" alt="React" width="40px" height="40px" style='padding-right:20px;'><img src="https://github.com/get-icon/geticon/raw/master/icons/jira.svg" alt="React" width="40px" height="40px" style='padding-right:20px;'><img src="https://github.com/get-icon/geticon/raw/master/icons/google-gmail.svg" alt="React" width="40px" height="40px" style='padding-right:20px;'><img src="https://github.com/get-icon/geticon/raw/master/icons/python.svg" alt="React" width="40px" height="40px" style='padding-right:20px;'>
 
 ## Setup
 
@@ -28,14 +27,17 @@ The report contains data from GitLab and Jira about completed merge requests and
 
 It's recommended to install via docker.
 
-```bash
-docker build -t weekly-report-email .
-docker run weekly-report-email
-```
+`docker build -t weekly-report-email .`
 
 Alternatively, you can install it directly (or with Python virtual environment of your choice).
 
 `pip install -r requirements.txt`
+
+## Run the program
+
+Via docker: `docker run weekly-report-email`
+
+Without docker: `python3 main.py`
 
 ## License
 
