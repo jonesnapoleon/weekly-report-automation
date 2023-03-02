@@ -43,7 +43,7 @@ class JiraClient:
 
         return list(filter(lambda data: data.task_status not in ['Done', 'Closed'], task_map.values()))
 
-    def obtain_jira_piechart_status(self):
+    def obtain_jira_task_statuses(self) -> dict[str, int]:
         piechart_status = self.jira.jql(
             self.__get_jql_request(anti_statuses=['Done', 'Closed'], created_date=None))
 

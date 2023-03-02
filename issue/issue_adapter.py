@@ -1,4 +1,7 @@
-class IssueEmailAdapter:
+from .issue_interface import IssueInterface
+
+
+class IssueEmailAdapter(IssueInterface):
     def __init__(self, ticket, strong_text, description):
         self.ticket = ticket
         self.strong_text = strong_text

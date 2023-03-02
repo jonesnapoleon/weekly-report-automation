@@ -1,10 +1,10 @@
 from typing import List
 
-from issue.issue_adapter import IssueEmailAdapter
+from issue.issue_interface import IssueInterface
 
 
 class EmailSection:
-    def __init__(self, issues: List[IssueEmailAdapter], title):
+    def __init__(self, issues: List[IssueInterface], title):
         self.issues = issues
         self.title = title
 
