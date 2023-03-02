@@ -8,7 +8,22 @@ The report contains data from GitLab and Jira about completed merge requests and
 
 You could read more about the projects at [my medium](https://jonesnapoleon.medium.com/weekly-report-email-now-fully-automated-6b3d4cb392fe).
 
-<img src="https://github.com/get-icon/geticon/raw/master/icons/gitlab.svg" alt="React" width="40px" height="40px" style='padding-right:20px;'><img src="https://github.com/get-icon/geticon/raw/master/icons/jira.svg" alt="React" width="40px" height="40px" style='padding-right:20px;'><img src="https://github.com/get-icon/geticon/raw/master/icons/google-gmail.svg" alt="React" width="40px" height="40px" style='padding-right:20px;'><img src="https://github.com/get-icon/geticon/raw/master/icons/python.svg" alt="React" width="40px" height="40px" style='padding-right:20px;'>
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/get-icon/geticon/raw/master/icons/gitlab.svg" alt="React" width="40px" height="40px">
+    </td>
+     <td>
+      <img src="https://github.com/get-icon/geticon/raw/master/icons/jira.svg" alt="React" width="40px" height="40px">
+     </td>
+     <td>
+      <img src="https://github.com/get-icon/geticon/raw/master/icons/google-gmail.svg" alt="React" width="40px" height="40px">
+     </td>
+     <td>
+      <img src="https://github.com/get-icon/geticon/raw/master/icons/python.svg" alt="React" width="40px" height="40px">
+     </td>
+  </tr>
+</table>
 
 ## Setup
 
