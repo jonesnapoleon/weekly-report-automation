@@ -14,7 +14,7 @@ GMAIL_EMAIL = config('GMAIL_EMAIL')
 GMAIL_PASSWORD = config('GMAIL_PASSWORD')
 GMAIL_NAME = config('GMAIL_NAME')
 
-DEFAULT_JIRA_STATUS_IMAGE_PATH = 'output/jira_status.jpg'
+DEFAULT_JIRA_STATUS_IMAGE_PATH = 'jira_status.jpg'
 
 HAVE_DONE_MESSAGE = "Last week, I've done:"
 TO_DO_MESSAGE = 'This week, I will do:'
@@ -22,8 +22,8 @@ DEFAULT_PIECHART_MESSAGE = 'Current issue statuses'
 
 
 THRESHOLD_DATE_DELTA = 48
-EMAIL_RECIPIENTS = ['test@gmail.com',
-                    'test1@gmail.com']
+EMAIL_RECIPIENTS = ['jones.autumn@seamoney.com',
+                    'condro.wiyono@seamoney.com']
 
 
 EMAIL_CONTENT_HTML_TEMPLATE = Template(

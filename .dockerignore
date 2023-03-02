@@ -1,0 +1,11 @@
+.DS_Store
+env
+__pycache__
+.tmp_commits_squashed
+db.sqlite3
+static
+venv
+.vscode
+.github
+.git
+.gitignore
