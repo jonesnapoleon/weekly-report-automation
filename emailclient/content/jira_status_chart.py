@@ -1,11 +1,11 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from constants import DEFAULT_JIRA_STATUS_IMAGE_PATH, DEFAULT_PIECHART_MESSAGE
+from constants.data import DEFAULT_JIRA_STATUS_IMAGE_PATH, PIECHART_MESSAGE
 
 
 class PieChart:
-    def __init__(self, jira_status={}, title=DEFAULT_PIECHART_MESSAGE):
+    def __init__(self, jira_status={}, title=PIECHART_MESSAGE):
         self.data = []
         self.labels = []
         self.title = title

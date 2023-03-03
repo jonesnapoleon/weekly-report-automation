@@ -1,3 +1,5 @@
+from constants.data import JIRA_BROWSE_PATH
+
 from .issue_interface import IssueInterface
 
 
@@ -11,7 +13,6 @@ class IssueEmailAdapter(IssueInterface):
         if not ticket:
             return ticket
 
-        JIRA_BROWSE_PATH = "https://jira.shopee.io/browse/"
         ticket_url = f'{JIRA_BROWSE_PATH}{ticket}'
         return f'[<a href={ticket_url}>{ticket}</a>]'
 

@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
 
-from constants import (EMAIL_CONTENT_HTML_TEMPLATE,
-                       EMAIL_CONTENT_TEXT_TEMPLATE, HAVE_DONE_MESSAGE,
-                       TO_DO_MESSAGE)
+from constants.data import (EMAIL_CONTENT_HTML_TEMPLATE,
+                            EMAIL_CONTENT_TEXT_TEMPLATE,
+                            EMAIL_SUBJECT_PLACEHOLDER, HAVE_DONE_MESSAGE,
+                            TO_DO_MESSAGE)
 
 from .email_section import EmailSection
 
@@ -14,7 +15,9 @@ def get_email_subject():
     this_week_repr = this_week.strftime('%x')
     last_week_repr = last_week.strftime('%x')
 
-    return f'[Weekly Report] Jones Napoleon Autumn: {last_week_repr} - {this_week_repr}'
+    subject = EMAIL_SUBJECT_PLACEHOLDER.safe_substitute(
+        LAST_WEEK=last_week_repr, THIS_WEEK=this_week_repr)
+    return subject
 
 
 class EmailContent:

@@ -7,8 +7,8 @@ from email.utils import make_msgid
 from pathlib import Path
 from string import Template
 
-from constants import (DEFAULT_JIRA_STATUS_IMAGE_PATH, EMAIL_RECIPIENTS,
-                       GMAIL_EMAIL, GMAIL_NAME, GMAIL_PASSWORD)
+from constants.data import DEFAULT_JIRA_STATUS_IMAGE_PATH, EMAIL_RECIPIENTS
+from constants.secret import GMAIL_EMAIL, GMAIL_NAME, GMAIL_PASSWORD
 from emailclient.content.email_content import EmailContent
 
 

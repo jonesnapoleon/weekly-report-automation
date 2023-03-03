@@ -4,8 +4,9 @@ from typing import List
 
 import requests
 
-from constants import (GITLAB_BASE_URL, GITLAB_PERSONAL_ACCESS_TOKEN,
-                       GITLAB_USERNAME, THRESHOLD_DATE_DELTA)
+from constants.data import DEFAULT_DATE_DELTA
+from constants.secret import (GITLAB_BASE_URL, GITLAB_PERSONAL_ACCESS_TOKEN,
+                              GITLAB_USERNAME)
 from issue.issue_interface import IssueInterface
 
 from .gitlab_merge_requests import GitlabMergeRequest
@@ -21,7 +22,7 @@ class GitlabClient:
             f'{GITLAB_BASE_URL}/{url}',  headers=REQUEST_HEADERS)
         return response.json()
 
-    def __threshold_date_since(self, delta=THRESHOLD_DATE_DELTA):
+    def __threshold_date_since(self, delta=DEFAULT_DATE_DELTA):
         target_date = datetime.now() - timedelta(days=delta)
         return target_date.isoformat()
 
