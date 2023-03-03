@@ -38,7 +38,11 @@ You could read more about the projects at [my medium](https://jonesnapoleon.medi
 - Create your [Gmail app passwords](https://support.google.com/accounts/answer/185833?hl=en#zippy=%2Cwhy-you-may-need-an-app-password)
 - Copy the content of `.env.example` to `.env`, and configure the credentials accordingly.
 
-3. Install the dependencies
+3. Adjust your requirements
+
+- Go to file `constants/data.py` and modify the configuration to your requiremsnt.
+
+4. Install the dependencies
 
 It's recommended to install via docker.
 
