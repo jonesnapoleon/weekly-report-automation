@@ -40,7 +40,7 @@ You could read more about the projects at [my medium](https://jonesnapoleon.medi
 
 3. Adjust your requirements
 
-- Go to file `constants/data.py` and modify the configuration to your requiremsnt.
+- Go to file `constants/data.py` and modify the configuration to fit your requirement.
 
 4. Install the dependencies
 
