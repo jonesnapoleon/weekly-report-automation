@@ -2,16 +2,16 @@ from string import Template
 
 DEFAULT_DATE_DELTA = 48
 
-JIRA_BROWSE_PATH = "https://jira.shopee.io/browse/"
-DEFAULT_JIRA_PROJECT_NAME = 'SIPP'
+JIRA_BROWSE_PATH = "https://jones.jira.com/browse/"
+DEFAULT_JIRA_PROJECT_NAME = 'JONES_PROJECT'
 
 HAVE_DONE_MESSAGE = "Last week, I've done:"
 TO_DO_MESSAGE = 'This week, I will do:'
 PIECHART_MESSAGE = 'Current issue statuses'
 
 
-EMAIL_RECIPIENTS = ['jones.autumn@seamoney.com',
-                    'condro.wiyono@seamoney.com']
+EMAIL_RECIPIENTS = ['noreply@jones.com',
+                    'hi1@jones.com']
 
 
 EMAIL_CONTENT_HTML_TEMPLATE = Template(
