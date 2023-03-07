@@ -2,7 +2,7 @@ from typing import List
 
 from atlassian import Jira
 
-from constants.data import DEFAULT_DATE_DELTA, DEFAULT_JIRA_PROJECT_NAME
+from constants.data import DEFAULT_DATE_DELTA, DEFAULT_JIRA_PROJECT_NAMES
 from constants.secret import (JIRA_BASE_URL, JIRA_PERSONAL_ACCESS_TOKEN,
                               JIRA_USERNAME)
 from issue.issue_interface import IssueInterface
@@ -19,7 +19,7 @@ class JiraClient:
         time_filter = f'AND createdDate > -{created_date}d' if created_date is not None else ''
         status_filter = f'AND status not in ({", ".join(anti_statuses)})' if anti_statuses else ''
 
-        return f'project = {DEFAULT_JIRA_PROJECT_NAME} AND (Developer = currentUser() OR assignee = currentUser()) {status_filter} {time_filter} ORDER BY createdDate DESC'
+        return f'project in {DEFAULT_JIRA_PROJECT_NAMES} AND (Developer = currentUser() OR assignee = currentUser()) {status_filter} {time_filter} ORDER BY createdDate DESC'
 
     def obtain_jira_tasks(self) -> List[IssueInterface]:
         todo_data = self.jira.jql(self.__get_jql_request(

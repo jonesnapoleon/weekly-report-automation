@@ -3,7 +3,7 @@ from string import Template
 DEFAULT_DATE_DELTA = 48
 
 JIRA_BROWSE_PATH = "https://jones.jira.com/browse/"
-DEFAULT_JIRA_PROJECT_NAME = 'JONES_PROJECT'
+DEFAULT_JIRA_PROJECT_NAMES = ('JONES_PROJECT1', 'JONES_PROJECT2')
 
 HAVE_DONE_MESSAGE = "Last week, I've done:"
 TO_DO_MESSAGE = 'This week, I will do:'
